@@ -80,21 +80,20 @@ Run these from Claude Code. You orchestrate; the fleet hunts — and you approve
 ## The cycle
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'fontFamily':'Segoe UI, system-ui, sans-serif','lineColor':'#9a1a24','primaryColor':'#141414','primaryTextColor':'#f0f0f0','primaryBorderColor':'#d7182a'},'flowchart':{'curve':'basis','nodeSpacing':52,'rankSpacing':46}}}%%
 flowchart TD
   GO(["Scope + GO"]):::gate
   subgraph RECON [" "]
     direction TB
     R1["Recon-1<br/>broad OSINT sweep"]:::recon
-    R2["Recon-2<br/>deep recon · ranked hypotheses"]:::recon
+    R2["Recon-2<br/>deep recon, ranked hypotheses"]:::recon
     R1 --> R2
   end
   subgraph EXPLOIT [" "]
     direction TB
     AT["Attack<br/>exploit each hypothesis"]:::attack
-    VF{{"Adversarial verify<br/>oracle + 3 skeptics"}}:::gate
+    VF{"Adversarial verify<br/>oracle + 3 skeptics"}:::gate
     CH["Chain<br/>seeded kill-chains"]:::attack
-    TR["Triage<br/>Reproduce ▸ Impact ▸ Severity"]:::attack
+    TR["Triage<br/>Reproduce, Impact, Severity"]:::attack
     AT --> VF
     VF -.-> AT
     VF ==> CH
@@ -104,12 +103,10 @@ flowchart TD
   GO --> R1
   R2 --> AT
   TR --> RP
-  classDef recon fill:#141414,stroke:#6a6a6a,stroke-width:1.4px,color:#e9e9e9
-  classDef attack fill:#1a0708,stroke:#d7182a,stroke-width:1.5px,color:#ffffff
-  classDef gate fill:#000000,stroke:#d7182a,stroke-width:2px,color:#ff5a66
-  classDef deliver fill:#0b1a10,stroke:#2b9246,stroke-width:1.5px,color:#e8ffee
-  style RECON fill:#0e0e0e,stroke:#2a2a2a,color:#bbbbbb
-  style EXPLOIT fill:#120607,stroke:#4a1016,color:#ff6b74
+  classDef recon fill:#141414,stroke:#6a6a6a,color:#e9e9e9
+  classDef attack fill:#1a0708,stroke:#d7182a,color:#ffffff
+  classDef gate fill:#000000,stroke:#d7182a,color:#ff5a66
+  classDef deliver fill:#0b1a10,stroke:#2b9246,color:#e8ffee
 ```
 
 Each phase is an operator **GO** gate, a fleet of clean-context agents, and a clean-context synthesis.
