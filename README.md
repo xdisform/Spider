@@ -10,12 +10,12 @@
 
 <br/>
 
-![Runs on Claude Code](https://img.shields.io/badge/runs%20on-Claude%20Code-d7182a?style=for-the-badge)
-[![Bug bounty paid](https://img.shields.io/badge/bug%20bounty%20paid-1%2C000%2C000%20RUB-d7182a?style=for-the-badge)](https://ibb.co/qL87ZM8V)
+![Runs on Claude Code](docs/badge-runson.svg)
+[![Bug bounty paid](docs/badge-bounty.svg)](https://ibb.co/qL87ZM8V)
 ![License MIT](https://img.shields.io/badge/license-MIT-111111?style=for-the-badge)
 
-![Skills](https://img.shields.io/badge/skills-92%20packs-d7182a?style=flat-square)
-![Agents](https://img.shields.io/badge/agents-10%20roles-d7182a?style=flat-square)
+![Skills](docs/badge-skills.svg)
+![Agents](docs/badge-agents.svg)
 ![False positives](https://img.shields.io/badge/false%20positives-0%20by%20design-111111?style=flat-square)
 
 [![disform.ru](docs/btn-site.svg)](https://disform.ru)
