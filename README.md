@@ -11,12 +11,16 @@
 <br/>
 
 ![Runs on Claude Code](https://img.shields.io/badge/runs%20on-Claude%20Code-d7182a?style=for-the-badge)
-![Bug bounty paid](https://img.shields.io/badge/bug%20bounty%20paid-1%2C000%2C000%20RUB-d7182a?style=for-the-badge)
+[![Bug bounty paid](https://img.shields.io/badge/bug%20bounty%20paid-1%2C000%2C000%20RUB-d7182a?style=for-the-badge)](https://ibb.co/qL87ZM8V)
 ![License MIT](https://img.shields.io/badge/license-MIT-111111?style=for-the-badge)
 
 ![Skills](https://img.shields.io/badge/skills-92%20packs-d7182a?style=flat-square)
 ![Agents](https://img.shields.io/badge/agents-10%20roles-d7182a?style=flat-square)
 ![False positives](https://img.shields.io/badge/false%20positives-0%20by%20design-111111?style=flat-square)
+
+[![Website](https://img.shields.io/badge/disform.ru-white?style=for-the-badge&logo=googlechrome&logoColor=333333)](https://disform.ru)
+[![Telegram](https://img.shields.io/badge/Telegram-white?style=for-the-badge&logo=telegram&logoColor=229ED9)](https://t.me/xdisform)
+[![Private chat](https://img.shields.io/badge/Private%20chat-white?style=for-the-badge&logo=telegram&logoColor=229ED9)](https://t.me/tribute/app?startapp=s1bsn)
 
 </div>
 
@@ -78,36 +82,6 @@ Run these from Claude Code. You orchestrate; the fleet hunts — and you approve
 ---
 
 ## The cycle
-
-```mermaid
-flowchart TD
-  GO(["Scope + GO"]):::gate
-  subgraph RECON [" "]
-    direction TB
-    R1["Recon-1<br/>broad OSINT sweep"]:::recon
-    R2["Recon-2<br/>deep recon, ranked hypotheses"]:::recon
-    R1 --> R2
-  end
-  subgraph EXPLOIT [" "]
-    direction TB
-    AT["Attack<br/>exploit each hypothesis"]:::attack
-    VF{"Adversarial verify<br/>oracle + 3 skeptics"}:::gate
-    CH["Chain<br/>seeded kill-chains"]:::attack
-    TR["Triage<br/>Reproduce, Impact, Severity"]:::attack
-    AT --> VF
-    VF -.-> AT
-    VF ==> CH
-    CH --> TR
-  end
-  RP(["Report<br/>submission-ready PoC"]):::deliver
-  GO --> R1
-  R2 --> AT
-  TR --> RP
-  classDef recon fill:#141414,stroke:#6a6a6a,color:#e9e9e9
-  classDef attack fill:#1a0708,stroke:#d7182a,color:#ffffff
-  classDef gate fill:#000000,stroke:#d7182a,color:#ff5a66
-  classDef deliver fill:#0b1a10,stroke:#2b9246,color:#e8ffee
-```
 
 Each phase is an operator **GO** gate, a fleet of clean-context agents, and a clean-context synthesis.
 
