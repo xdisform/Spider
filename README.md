@@ -18,9 +18,9 @@
 ![Agents](https://img.shields.io/badge/agents-10%20roles-d7182a?style=flat-square)
 ![False positives](https://img.shields.io/badge/false%20positives-0%20by%20design-111111?style=flat-square)
 
-[![Website](https://img.shields.io/badge/disform.ru-white?style=for-the-badge&logo=googlechrome&logoColor=333333)](https://disform.ru)
-[![Telegram](https://img.shields.io/badge/Telegram-white?style=for-the-badge&logo=telegram&logoColor=229ED9)](https://t.me/xdisform)
-[![Private chat](https://img.shields.io/badge/Private%20chat-white?style=for-the-badge&logo=telegram&logoColor=229ED9)](https://t.me/tribute/app?startapp=s1bsn)
+[![Website](https://img.shields.io/badge/disform.ru-ff5555?style=for-the-badge)](https://disform.ru)
+[![Telegram](https://img.shields.io/badge/Telegram-ff5555?style=for-the-badge)](https://t.me/xdisform)
+[![Private chat](https://img.shields.io/badge/Private%20chat-ff5555?style=for-the-badge)](https://t.me/tribute/app?startapp=s1bsn)
 
 </div>
 
