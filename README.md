@@ -40,7 +40,7 @@ Autonomous offensive AI is only getting sharper — and Spider is already landin
 1. **Unauthorized fund withdrawal from a bank** — found a missing authorization-token check and confirmed money moving out through the banking terminals.
 2. **Administrator account takeover in the public sector.**
 3. **RCE across every repository of a platform.**
-4. **Full kill-chain — SQLi → credential read → RCE → webshell → host filesystem.** The defenders had to **irreversibly wipe the backend** to stop the advance through their infrastructure.
+4. **Full kill-chain — SQLi - credential read - RCE - webshell - host filesystem.** The defenders had to **irreversibly wipe the backend** to stop the advance through their infrastructure.
 5. **600 customers' personal data (PII) exfiltrated in a single request.**
 6. **MITM credential theft inside the CI/CD of a top security vendor.**
 7. **Platform-wide RCE via the `app_dev.php` controller.**
