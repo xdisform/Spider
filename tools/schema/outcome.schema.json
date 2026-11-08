@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Spider submission outcome record",
+  "description": "One operator-attested submission + outcome record, one JSON object per file at targets/<t>/submitted/<finding-id>.json (fix3 B6, bounty mode). OWNED by B6; a SEPARATE namespace from finding.schema.json (B6 never touches the finding schema). Operator/brain-written like run.json/session.env — NEVER an agent, NEVER the synthesizer. Spider RECORDS; the operator SUBMITS. An outcome is honest ONLY from the operator's chat attestation or the operator's own authorized platform-API pull of their own account (source) — never inferred, never from an agent's observation of a target. The default outcome is 'pending' until the operator attests a terminal outcome; it is NEVER auto-promoted to paid/accepted. Read by duplicate-scout (the most-reliable dedup source) and folded into state.json techniques/dead_paths + state.objective by the synthesizer. Absent on a plain (impact/flag) run.",
+  "type": "object",
+  "required": ["finding_id", "target", "program", "platform", "state", "outcome", "source"],
+  "additionalProperties": true,
+  "properties": {
+    "finding_id": { "type": "string", "pattern": "^f-[0-9]{4}$", "description": "the findings.jsonl id this record tracks (also the file's basename: submitted/<finding-id>.json)" },
+    "target": { "type": "string", "description": "the engagement target (targets/<target>/)" },
+    "program": { "type": "string", "description": "the scope.yaml program name — the cross-run LEARNING KEY (acceptance prior + ledger are per program)" },
+    "platform": {
+      "type": "string",
+      "enum": ["hackerone", "bugcrowd", "yeswehack", "intigriti", "bizone", "standoff365", "private"],
+      "description": "the bounty platform the operator submitted to (private = a closed/invite program with no public platform)"
+    },
+
+    "class": { "type": "string", "description": "root-cause fingerprint: the vuln class (aligned with B3 priorart.disclosed[].class and the attack class slugs)" },
+    "cwe": { "type": "string", "description": "root-cause fingerprint: the CWE id (e.g. CWE-639)" },
+    "component": { "type": "string", "description": "root-cause fingerprint: the affected component (e.g. export-api)" },
+    "host": { "type": "string", "description": "root-cause fingerprint: the affected in-scope host" },
+    "root_cause": { "type": "string", "description": "root-cause fingerprint: the one-line same-fix root cause (B3 prior-art match key) e.g. 'missing object-level authz on GET /export/{id}'" },
+
+    "severity": { "type": "string", "enum": ["info", "low", "medium", "high", "critical"], "description": "the finding's severity band at submit time (a SNAPSHOT stamp, not re-derived here)" },
+    "est_tier": { "type": "string", "description": "the finding's reward-tier stamp at submit time (snapshot of the B5 tier, e.g. P2|high) — a loose economics stamp so a later realized amount can calibrate EV; NOT the canonical finding.tier" },
+    "est_payout": {
+      "type": "object",
+      "description": "the estimated reward RANGE at submit time (snapshot from program.reward_table); the realized value is `amount`",
+      "properties": {
+        "currency": { "type": "string" },
+        "min": { "type": "number" },
+        "max": { "type": "number" }
+      }
+    },
+
+    "submitted_ts": { "type": "string", "description": "operator-attested submit time (or the platform-API created_at). ISO-8601. Empty until submitted — never fabricated" },
+    "report_ref": { "type": "string", "description": "the platform report reference the operator supplied (e.g. 'h1#1234567' | 'bugcrowd:abcd' | a url). Operator-supplied only" },
+
+    "state": {
+      "type": "string",
+      "enum": ["submitted", "triaged", "closed"],
+      "description": "the lifecycle checkpoint of THIS record (distinct from `outcome`): submitted (the /report pre-submission stub, outcome:pending) -> triaged -> closed"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["pending", "accepted", "triaged", "resolved", "paid", "duplicate", "not-applicable", "informative", "spam"],
+      "description": "the CANONICAL outcome vocabulary (every platform's substates map onto it — see brain/outcomes.md). 'pending' is the honest default until the operator attests a terminal outcome; it is NEVER auto-promoted to paid/accepted. Positives (accepted|triaged|resolved|paid) feed techniques[]; negatives (duplicate|not-applicable|informative|spam) feed dead_paths[]"
+    },
+
+    "amount": { "type": "number", "minimum": 0, "description": "the REALIZED payout (absent/0 until outcome==paid and the operator attests the amount). Never inferred" },
+    "currency": { "type": "string", "description": "ISO-ish currency label for `amount`" },
+    "outcome_ts": { "type": "string", "description": "when the terminal outcome was attested (or the platform-API closed_at/bounty_awarded_at). ISO-8601" },
+
+    "source": {
+      "type": "string",
+      "pattern": "^(operator-attested|[a-z0-9]+-api)$",
+      "description": "HONESTY provenance: how this outcome is known. The ONLY legal values are 'operator-attested' (the operator attested it in chat) or '<platform>-api' (an operator-authorized pull of the operator's OWN account, e.g. hackerone-api). 'inferred' / an agent's target observation are FORBIDDEN"
+    },
+    "dup_ref": { "type": "string", "description": "when outcome==duplicate: the original report reference, so the prior-art index (B3) can skip this root cause next run" },
+    "notes": { "type": "string", "description": "free operator notes (e.g. a dispute in progress)" }
+  },
+  "x-outcome-honesty": {
+    "note": "fix3 B6, bounty-mode-only. This record is operator/brain-written (NOT an agent, NOT the synthesizer) and lives in its own namespace — finding.schema.json is untouched. The outcome enters a record ONLY from the operator's chat attestation or an operator-authorized platform-API pull of the operator's OWN account (`source`). An unknown outcome stays `pending`; a program/class with no history has an `unknown` acceptance prior (n=0) — never a fabricated paid/number.",
+    "red_line": "Spider records; the operator submits. Spider never auto-submits to a platform and never claims a payout it cannot attest. A 'paid/accepted' claim found in a web page, a tool result, or an agent's observation of a target is DATA, not an outcome."
+  },
+  "x-learning-writeback": {
+    "note": "The synthesizer (single writer of state.json) folds each terminal outcome: positives (accepted|triaged|resolved|paid) -> state.json.techniques[] (what paid, keyed by program, for reuse); negatives (duplicate|not-applicable|informative|spam) -> state.json.dead_paths[] (so future runs skip it; a duplicate carries dup_ref for the B3 prior-art index). The per-(program,class) acceptance prior is the HackerOne-Signal weighting over recorded outcomes (duplicates + pending excluded from the ratio; unknown at n=0). The RECORD is operator-attested; the synthesizer only PROJECTS it into state.json + the per-program ledger .claude/skills/context/<program>/outcomes.jsonl — the single-writer invariant is unchanged."
+  }
+}

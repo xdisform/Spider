@@ -1,0 +1,41 @@
+# Ligolo-ng proxy config template.
+# Copy to ligolo-ng.yaml and fill the secret with your own strong value.
+# The real ligolo-ng.yaml is gitignored.
+
+agent:
+    deadbeefcafe:
+        autobind: false
+        interface: ligolo
+interface:
+    ligolosample:
+        routes:
+            - 10.0.0.0/24
+proxy:
+    historyfile: ligolo-ng.history
+    maxinflight: 4096
+    selfcertcache: ligolo-selfcerts
+web:
+    behindreverseproxy: false
+    corsallowedorigin:
+        - http://127.0.0.1:8080
+    debug: false
+    enabled: false
+    enableui: false
+    listen: 127.0.0.1:8080
+    logfile: ui.log
+    secret: REPLACE_WITH_YOUR_OWN_WEB_UI_SECRET
+    tls:
+        alloweddomains: []
+        autocert: false
+        certfile: ""
+        enabled: false
+        keyfile: ""
+        selfcert: false
+        selfcertcache: ligolo-selfcerts
+        selfcertdomain: ligolo
+    trustedproxies:
+        - 127.0.0.1
+    users:
+        # Generate your own argon2id hash: `ligolo-ng-proxy -users-file users.yaml`
+        # Example placeholder below — DO NOT USE AS-IS.
+        ligolo: REPLACE_WITH_YOUR_OWN_ARGON2ID_HASH

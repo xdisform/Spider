@@ -1,0 +1,28 @@
+{
+  "generated_from": "corpus_index.py",
+  "counts": {
+    "artifact-analysis": 1,
+    "auth-bypass": 11,
+    "crypto": 3,
+    "forensics": 1,
+    "graphql": 2,
+    "idor": 5,
+    "lateral": 2,
+    "pwn": 3,
+    "request-smuggling": 2,
+    "rev": 1,
+    "sqli": 1,
+    "ssrf": 14,
+    "ssti": 8,
+    "stego": 1,
+    "takeover": 3,
+    "upload": 4,
+    "waf-body-bypass": 1,
+    "xss": 3,
+    "xxe": 1
+  },
+  "total_exemplars": 67,
+  "payloads": 67,
+  "negatives": 40,
+  "omitted_payloads": 18
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Spider finding",
+  "description": "One confirmed finding, one JSON object per line in findings.jsonl. Written only by the synthesizer. The evidence gate (below) is applied by the verifier/synthesizer, not by JSON Schema alone.",
+  "type": "object",
+  "required": ["id", "target", "type", "severity", "title", "detail", "evidence", "verified"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^f-[0-9]{4}$" },
+    "target": { "type": "string", "description": "host or url the finding is on" },
+    "type": { "type": "string", "description": "RCE | IDOR | SSRF | SQLi | ATO | info-disclosure | ..." },
+    "severity": { "type": "string", "enum": ["info", "low", "medium", "high", "critical"] },
+    "title": { "type": "string" },
+    "detail": { "type": "string", "description": "what it is and how it was found" },
+    "evidence": { "type": "string", "description": "path under raw/ that backs this finding" },
+    "execution_evidence": { "type": "string", "description": "proof output (whoami/db version) or OOB callback id that PROVES impact" },
+    "verified": { "type": "boolean" },
+    "refuted": { "type": "boolean", "default": false },
+    "cwe": { "type": "array", "items": { "type": "string" } },
+    "ts": { "type": "string" },
+
+    "repro": { "type": "string", "description": "crit-roadmap #1 (OPTIONAL): copy-paste reproduction steps, carried from the attack CANDIDATE. REQUIRED by the payout-gate's report-ready sub-gate (tools/payout-gate.py) — without it bounty-mode payout_ready is pinned false" },
+    "poc_path": { "type": "string", "description": "crit-roadmap #1 (OPTIONAL): path to a runnable PoC under raw/, carried from the attack CANDIDATE. REQUIRED by the payout-gate's report-ready sub-gate alongside repro" },
+    "oracle_type": { "type": "string", "description": "crit-roadmap #1 (OPTIONAL): the class oracle that validated this finding (OOB-callback | DB-banner | command-output | cross-account-record | cross-origin-read | flag-capture | ...), carried from the attack return's confirmed[]" },
+    "oracle_evidence": { "type": "string", "description": "crit-roadmap #1 (OPTIONAL): the re-derivable oracle evidence string, carried from the attack return's confirmed[]" },
+    "remediation": { "type": "string", "description": "crit-roadmap #1 (OPTIONAL): the fix; the report-ready sub-gate accepts cwe OR remediation" },
+
+    "vrt": { "type": "string", "description": "fix3 B4 (OPTIONAL, bounty-mode): the dotted VRT class id (e.g. broken_access_control.insecure_direct_object_references)" },
+    "priority": { "type": "string", "enum": ["P1", "P2", "P3", "P4", "P5", "varies"], "description": "fix3 B4 (OPTIONAL): the VRT CLASS baseline priority — distinct from `severity` (CVSS band) and from `tier` (B5 reward tier)" },
+    "eligibility": { "type": "string", "enum": ["payable", "excluded", "control-test-only", "unknown"], "description": "fix3 B4 (OPTIONAL): payout-policy eligibility vs program.eligible/excluded_classes. NEVER changes `severity`" },
+    "eligibility_reason": { "type": "string", "description": "fix3 B4 (OPTIONAL): why this eligibility" },
+
+    "cvss_vector": { "type": "string", "description": "fix3 B5 (OPTIONAL): CVSS 3.1 vector built from PROVEN impact" },
+    "cvss_score": { "type": "number", "minimum": 0, "maximum": 10, "description": "fix3 B5 (OPTIONAL): Roundup-derived from cvss_vector (deterministic; tools/ev-score.py). `severity` stays the canonical band" },
+    "tier": { "type": "string", "enum": ["P1", "P2", "P3", "P4", "P5"], "description": "fix3 B5 (OPTIONAL): the evidence-derived REWARD tier (CVSS band cross-checked with VRT priority, resolved through program.reward_table)" },
+    "tier_reward": { "type": "array", "items": { "type": "number" }, "description": "fix3 B5 (OPTIONAL): [min,max] from program.reward_table; omitted in ordinal mode" },
+    "expected_value": { "type": "number", "description": "fix3 B5 (OPTIONAL): reward_value(tier) x novelty_confidence x eligibility_confidence — a RANKING scalar, never a payout claim" },
+    "ev_basis": { "type": "object", "description": "fix3 B5 (OPTIONAL): the EV audit trail { reward_value, novelty_confidence, eligibility_confidence, mode:monetary|ordinal }" },
+
+    "novelty": { "type": "string", "enum": ["novel", "likely-duplicate", "could-not-verify"], "description": "fix3 B3 (OPTIONAL): dedup verdict. could-not-verify is NEVER auto-promoted to novel; novelty NEVER changes severity" },
+    "novelty_ref": { "type": "string", "description": "fix3 B3 (OPTIONAL): the matching disclosed ref (h1#.../CVE-.../GHSA-.../submitted:f-XXXX) if any" },
+    "novelty_reason": { "type": "string", "description": "fix3 B3 (OPTIONAL): the reason for the verdict" },
+    "dedup_coverage": { "type": "string", "enum": ["verified", "partial", "unverifiable"], "description": "fix3 B3 (OPTIONAL): priorart coverage behind the verdict" },
+    "dedup_checked_ts": { "type": "string", "description": "fix3 B3 (OPTIONAL): when dedup was checked" },
+
+    "payout_ready": { "type": "boolean", "description": "fix3 B2 (OPTIONAL): the SINGLE payable verdict = deterministic AND of the six sub-gates. Computed by the synthesizer, enforced at /triage. Never set by narration" },
+    "payout_blockers": { "type": "array", "items": { "type": "string" }, "description": "fix3 B2 (OPTIONAL): the unmet sub-gates, each a structured string" },
+    "payout_distance": { "type": "string", "enum": ["signal", "reproduced", "impact-proven", "severity-graded", "dedup-cleared", "report-ready", "submitted", "paid"], "description": "fix3 B2 (OPTIONAL): the 8-rung payout ladder; payout_ready ⟺ reached report-ready" }
+  },
+  "x-evidence-gate": {
+    "impact_classes": ["RCE", "SQLi", "SSRF", "IDOR", "ATO", "auth-bypass", "SSTI", "XXE", "upload"],
+    "rule": "If type is an impact class and severity is high or critical but execution_evidence is empty, the finding is a CANDIDATE: downgrade severity to medium and prefix title with '[UNCONFIRMED CANDIDATE]'.",
+    "refuted": "A finding with refuted=true never appears in a report."
+  },
+  "x-payout-gate": {
+    "note": "fix3 B2, bounty-mode-only, ALL additions above are OPTIONAL (none in `required`) so every existing impact-run finding validates unchanged. A finding is `payout_ready` only when the six sub-gates all hold — impact-proven (the existing oracle) AND in-scope/ROE (existing scope) AND eligible class (B4) AND paying tier >= objective.min_payable_tier (B5) AND dedup-cleared (B3, not duplicate / not could-not-verify) AND report-ready (ISO-29147 elements). `payout_blockers` lists the unmet ones. Computed by the synthesizer (tools/payout-gate.py), enforced by /triage. could-not-verify dedup is a blocker unless objective.novelty.waive_unverified.",
+    "red_line": "No fabrication, no inflation: a missing CVSS vector is a blocker, not an assumed tier; could-not-verify is never silently promoted to cleared/novel; Spider records, the operator submits."
+  },
+  "x-tier-note": {
+    "note": "fix3 B5: `cvss_score` is Roundup-derived from `cvss_vector` per CVSS 3.1; `tier` is the reward-table lookup of that score cross-checked with VRT `priority`; `expected_value` = reward_value(tier) x novelty_confidence x eligibility_confidence; computed by the synthesizer via tools/ev-score.py, bounty-mode-only.",
+    "red_line": "Severity/tier are evidence-bound — the vector comes from PROVEN impact and is never inflated to clear a pay floor or reach a higher tier."
+  }
+}

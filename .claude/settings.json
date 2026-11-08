@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tools/start-leash.sh:*)",
+      "Bash(tools/leashed.sh:*)",
+      "Bash(tools/leash-cred.sh:*)",
+      "Bash(tools/leash-foothold.sh:*)",
+      "Bash(tools/leash-sock.py:*)",
+      "Bash(tools/guard.py:*)",
+      "Bash(python arsenal/probe.py:*)",
+      "Bash(python arsenal/provision.py:*)",
+      "Bash(python tools/prime.py:*)",
+      "Bash(python tools/retrieve.py:*)",
+      "Bash(bin/subfinder:*)",
+      "Bash(bin/dnsx:*)",
+      "Bash(bin/naabu:*)",
+      "Bash(bin/tlsx:*)",
+      "Bash(bin/gau:*)",
+      "Bash(bin/subzy:*)",
+      "mcp__osint",
+      "mcp__playwright",
+      "mcp__shodan",
+      "mcp__bloodhound_mcp"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python",
+            "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/session-welcome.py"],
+            "timeout": 10,
+            "statusMessage": "Spider welcome"
+          }
+        ]
+      }
+    ]
+  }
+}

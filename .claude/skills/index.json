@@ -1,0 +1,1413 @@
+{
+  "version": 1,
+  "note": "Skill router. The brain reads this to pick methodology by class/tags and passes the paths to workflow agents (agents Read them). Regenerate with: python tools/skill_index.py",
+  "skills": [
+    {
+      "name": "attack-ad-recon",
+      "path": "attack/ad-recon/SKILL.md",
+      "category": "attack",
+      "class": "ad-recon",
+      "cwe_ids": [
+        "CWE-287",
+        "CWE-284",
+        "CWE-306"
+      ],
+      "tags": [
+        "active-directory",
+        "bloodhound",
+        "kerberos",
+        "lsass",
+        "ntds",
+        "enumeration"
+      ]
+    },
+    {
+      "name": "attack-adcs",
+      "path": "attack/adcs/SKILL.md",
+      "category": "attack",
+      "class": "adcs",
+      "cwe_ids": [
+        "CWE-287",
+        "CWE-284",
+        "CWE-295"
+      ],
+      "tags": [
+        "adcs",
+        "pki",
+        "esc1",
+        "esc8",
+        "esc11",
+        "certipy",
+        "kerberos",
+        "ntlm-relay"
+      ]
+    },
+    {
+      "name": "attack-artifact-analysis",
+      "path": "attack/artifact-analysis/SKILL.md",
+      "category": "attack",
+      "class": "artifact-analysis",
+      "cwe_ids": [
+        "CWE-312",
+        "CWE-311",
+        "CWE-215"
+      ],
+      "tags": [
+        "artifact",
+        "file",
+        "binary",
+        "metadata",
+        "carve",
+        "extract"
+      ]
+    },
+    {
+      "name": "attack-auth-bypass",
+      "path": "attack/auth-bypass/SKILL.md",
+      "category": "attack",
+      "class": "auth-bypass",
+      "cwe_ids": [
+        "CWE-287",
+        "CWE-284"
+      ],
+      "tags": [
+        "auth",
+        "authz",
+        "access-control",
+        "forced-browsing",
+        "privilege-escalation"
+      ]
+    },
+    {
+      "name": "attack-backup-pivot",
+      "path": "attack/backup-pivot/SKILL.md",
+      "category": "attack",
+      "class": "backup-pivot",
+      "cwe_ids": [
+        "CWE-287",
+        "CWE-732",
+        "CWE-306"
+      ],
+      "tags": [
+        "backup",
+        "veeam",
+        "veritas",
+        "acronis",
+        "commvault",
+        "rubackup",
+        "ransomware-anti-recovery",
+        "inhibit-recovery",
+        "destructive-marker-only"
+      ]
+    },
+    {
+      "name": "cache-poisoning",
+      "path": "attack/cache-poisoning/SKILL.md",
+      "category": "attack",
+      "class": "cache-poisoning",
+      "tags": [
+        "web-cache-poisoning",
+        "cache-deception",
+        "cpdos",
+        "http"
+      ]
+    },
+    {
+      "name": "attack-cors",
+      "path": "attack/cors/SKILL.md",
+      "category": "attack",
+      "class": "cors",
+      "cwe_ids": [
+        "CWE-942"
+      ],
+      "tags": [
+        "cors",
+        "access-control",
+        "cross-origin",
+        "data-theft"
+      ]
+    },
+    {
+      "name": "attack-cred-access",
+      "path": "attack/cred-access/SKILL.md",
+      "category": "attack",
+      "class": "cred-access",
+      "cwe_ids": [
+        "CWE-1392",
+        "CWE-521",
+        "CWE-287"
+      ],
+      "tags": [
+        "credentials",
+        "default-creds",
+        "ssh",
+        "ftp",
+        "smb",
+        "control-test",
+        "foothold"
+      ]
+    },
+    {
+      "name": "attack-crypto",
+      "path": "attack/crypto/SKILL.md",
+      "category": "attack",
+      "class": "crypto",
+      "cwe_ids": [
+        "CWE-327",
+        "CWE-326",
+        "CWE-780",
+        "CWE-330"
+      ],
+      "tags": [
+        "ctf",
+        "crypto",
+        "rsa",
+        "cipher",
+        "pycryptodome"
+      ]
+    },
+    {
+      "name": "attack-deser",
+      "path": "attack/deser/SKILL.md",
+      "category": "attack",
+      "class": "deser",
+      "cwe_ids": [
+        "CWE-502"
+      ],
+      "tags": [
+        "deserialization",
+        "deser",
+        "gadget-chain",
+        "rce",
+        "java",
+        "dotnet",
+        "python",
+        "php"
+      ]
+    },
+    {
+      "name": "attack-escalation-ladder",
+      "path": "attack/escalation-ladder/SKILL.md",
+      "category": "attack",
+      "class": "escalation-ladder",
+      "cwe_ids": [
+        "CWE-269",
+        "CWE-522"
+      ],
+      "tags": [
+        "escalation",
+        "post-exploitation",
+        "token",
+        "cloud",
+        "cred-reuse",
+        "planner"
+      ]
+    },
+    {
+      "name": "attack-forensics",
+      "path": "attack/forensics/SKILL.md",
+      "category": "attack",
+      "class": "forensics",
+      "cwe_ids": [
+        "CWE-312",
+        "CWE-319",
+        "CWE-532"
+      ],
+      "tags": [
+        "ctf",
+        "forensics",
+        "pcap",
+        "memory",
+        "carve",
+        "foothold"
+      ]
+    },
+    {
+      "name": "attack-graphql",
+      "path": "attack/graphql/SKILL.md",
+      "category": "attack",
+      "class": "graphql",
+      "cwe_ids": [
+        "CWE-639",
+        "CWE-863",
+        "CWE-284"
+      ],
+      "tags": [
+        "graphql",
+        "bola",
+        "idor",
+        "authz",
+        "injection",
+        "batching"
+      ]
+    },
+    {
+      "name": "attack-idor",
+      "path": "attack/idor/SKILL.md",
+      "category": "attack",
+      "class": "idor",
+      "cwe_ids": [
+        "CWE-639",
+        "CWE-284"
+      ],
+      "tags": [
+        "idor",
+        "bola",
+        "access-control",
+        "authz"
+      ]
+    },
+    {
+      "name": "attack-info-disclosure",
+      "path": "attack/info-disclosure/SKILL.md",
+      "category": "attack",
+      "class": "info-disclosure",
+      "cwe_ids": [
+        "CWE-200",
+        "CWE-215",
+        "CWE-532",
+        "CWE-540"
+      ],
+      "tags": [
+        "info-disclosure",
+        "actuator",
+        "heapdump",
+        "source-map",
+        "stack-trace",
+        "secret-leak",
+        "spring-boot"
+      ]
+    },
+    {
+      "name": "attack-interactive-exploit",
+      "path": "attack/interactive-exploit/SKILL.md",
+      "category": "attack",
+      "class": "interactive-exploit",
+      "cwe_ids": [
+        "CWE-840",
+        "CWE-287",
+        "CWE-134",
+        "CWE-20"
+      ],
+      "tags": [
+        "interactive",
+        "stateful",
+        "pwn",
+        "websocket",
+        "socket",
+        "foothold"
+      ]
+    },
+    {
+      "name": "attack-internal-recon",
+      "path": "attack/internal-recon/SKILL.md",
+      "category": "attack",
+      "class": "internal-recon",
+      "cwe_ids": [
+        "CWE-200",
+        "CWE-538"
+      ],
+      "tags": [
+        "discovery",
+        "enumeration",
+        "linpeas",
+        "winpeas",
+        "suid",
+        "sudo",
+        "cron",
+        "read-only",
+        "post-foothold"
+      ]
+    },
+    {
+      "name": "attack-jwt",
+      "path": "attack/jwt/SKILL.md",
+      "category": "attack",
+      "class": "jwt",
+      "cwe_ids": [
+        "CWE-347",
+        "CWE-287"
+      ],
+      "tags": [
+        "jwt",
+        "auth",
+        "token",
+        "signature",
+        "forgery"
+      ]
+    },
+    {
+      "name": "attack-kerberos",
+      "path": "attack/kerberos/SKILL.md",
+      "category": "attack",
+      "class": "kerberos",
+      "cwe_ids": [
+        "CWE-287",
+        "CWE-294",
+        "CWE-640"
+      ],
+      "tags": [
+        "kerberos",
+        "kerberoasting",
+        "asreproast",
+        "s4u",
+        "delegation",
+        "golden-ticket",
+        "silver-ticket"
+      ]
+    },
+    {
+      "name": "attack-keycloak-realm",
+      "path": "attack/keycloak-realm/SKILL.md",
+      "category": "attack",
+      "class": "keycloak-realm",
+      "cwe_ids": [
+        "CWE-287"
+      ],
+      "tags": [
+        "keycloak",
+        "oidc",
+        "idp",
+        "sso",
+        "broker",
+        "auth"
+      ]
+    },
+    {
+      "name": "attack-lateral",
+      "path": "attack/lateral/SKILL.md",
+      "category": "attack",
+      "class": "lateral",
+      "cwe_ids": [
+        "CWE-284",
+        "CWE-306"
+      ],
+      "tags": [
+        "lateral-movement",
+        "pivot",
+        "reachability",
+        "in-scope",
+        "creds",
+        "post-foothold"
+      ]
+    },
+    {
+      "name": "attack-loot",
+      "path": "attack/loot/SKILL.md",
+      "category": "attack",
+      "class": "loot",
+      "cwe_ids": [
+        "CWE-522",
+        "CWE-312",
+        "CWE-200"
+      ],
+      "tags": [
+        "collection",
+        "loot",
+        "objective",
+        "flag",
+        "credentials",
+        "secrets",
+        "bounded",
+        "post-foothold"
+      ]
+    },
+    {
+      "name": "attack-objective-capture",
+      "path": "attack/objective-capture/SKILL.md",
+      "category": "attack",
+      "class": "objective-capture",
+      "tags": [
+        "objective",
+        "flag",
+        "exfil",
+        "post-foothold",
+        "local-analysis",
+        "terminal"
+      ]
+    },
+    {
+      "name": "attack-ognl",
+      "path": "attack/ognl/SKILL.md",
+      "category": "attack",
+      "class": "ognl",
+      "cwe_ids": [
+        "CWE-917",
+        "CWE-94"
+      ],
+      "tags": [
+        "ognl",
+        "spel",
+        "mvel",
+        "expression-injection",
+        "struts",
+        "atlassian",
+        "spring",
+        "rce"
+      ]
+    },
+    {
+      "name": "attack-open-redirect",
+      "path": "attack/open-redirect/SKILL.md",
+      "category": "attack",
+      "class": "open-redirect",
+      "cwe_ids": [
+        "CWE-601"
+      ],
+      "tags": [
+        "open-redirect",
+        "redirect",
+        "ssrf",
+        "oauth",
+        "phishing"
+      ]
+    },
+    {
+      "name": "attack-otp-logic",
+      "path": "attack/otp-logic/SKILL.md",
+      "category": "attack",
+      "class": "otp-logic",
+      "cwe_ids": [
+        "CWE-287",
+        "CWE-640",
+        "CWE-308",
+        "CWE-310",
+        "CWE-304"
+      ],
+      "tags": [
+        "otp",
+        "2fa",
+        "mfa",
+        "auth",
+        "foothold",
+        "logic-flaw",
+        "session"
+      ]
+    },
+    {
+      "name": "attack-privesc",
+      "path": "attack/privesc/SKILL.md",
+      "category": "attack",
+      "class": "privesc",
+      "cwe_ids": [
+        "CWE-250",
+        "CWE-269",
+        "CWE-732"
+      ],
+      "tags": [
+        "privilege-escalation",
+        "gtfobins",
+        "lolbas",
+        "suid",
+        "sudo",
+        "capabilities",
+        "admin",
+        "post-foothold"
+      ]
+    },
+    {
+      "name": "attack-prototype-pollution",
+      "path": "attack/prototype-pollution/SKILL.md",
+      "category": "attack",
+      "class": "prototype-pollution",
+      "cwe_ids": [
+        "CWE-1321"
+      ],
+      "tags": [
+        "prototype-pollution",
+        "proto",
+        "gadget",
+        "dom-xss",
+        "rce"
+      ]
+    },
+    {
+      "name": "attack-pwn",
+      "path": "attack/pwn/SKILL.md",
+      "category": "attack",
+      "class": "pwn",
+      "cwe_ids": [
+        "CWE-787",
+        "CWE-121",
+        "CWE-134",
+        "CWE-416",
+        "CWE-120"
+      ],
+      "tags": [
+        "ctf",
+        "pwn",
+        "binary-exploitation",
+        "pwntools",
+        "rop",
+        "foothold"
+      ]
+    },
+    {
+      "name": "attack-rce",
+      "path": "attack/rce/SKILL.md",
+      "category": "attack",
+      "class": "rce",
+      "cwe_ids": [
+        "CWE-77",
+        "CWE-78",
+        "CWE-94",
+        "CWE-917"
+      ],
+      "tags": [
+        "rce",
+        "command-injection",
+        "os-command",
+        "log4shell",
+        "jndi",
+        "arg-injection"
+      ]
+    },
+    {
+      "name": "attack-relay",
+      "path": "attack/relay/SKILL.md",
+      "category": "attack",
+      "class": "relay",
+      "cwe_ids": [
+        "CWE-287",
+        "CWE-294",
+        "CWE-306"
+      ],
+      "tags": [
+        "ntlm-relay",
+        "kerberos-relay",
+        "mitm6",
+        "petitpotam",
+        "rbcd",
+        "coerce"
+      ]
+    },
+    {
+      "name": "attack-request-smuggling",
+      "path": "attack/request-smuggling/SKILL.md",
+      "category": "attack",
+      "class": "request-smuggling",
+      "cwe_ids": [
+        "CWE-444"
+      ],
+      "tags": [
+        "request-smuggling",
+        "desync",
+        "http",
+        "cl-te",
+        "te-cl"
+      ]
+    },
+    {
+      "name": "attack-rev",
+      "path": "attack/rev/SKILL.md",
+      "category": "attack",
+      "class": "rev",
+      "cwe_ids": [
+        "CWE-656",
+        "CWE-798",
+        "CWE-489"
+      ],
+      "tags": [
+        "ctf",
+        "rev",
+        "reverse-engineering",
+        "angr",
+        "z3",
+        "decompile"
+      ]
+    },
+    {
+      "name": "attack-saml",
+      "path": "attack/saml/SKILL.md",
+      "category": "attack",
+      "class": "saml",
+      "cwe_ids": [
+        "CWE-347",
+        "CWE-287"
+      ],
+      "tags": [
+        "saml",
+        "sso",
+        "auth",
+        "signature",
+        "assertion"
+      ]
+    },
+    {
+      "name": "attack-sqli",
+      "path": "attack/sqli/SKILL.md",
+      "category": "attack",
+      "class": "sqli",
+      "cwe_ids": [
+        "CWE-89"
+      ],
+      "tags": [
+        "sqli",
+        "injection",
+        "database"
+      ]
+    },
+    {
+      "name": "attack-ssrf",
+      "path": "attack/ssrf/SKILL.md",
+      "category": "attack",
+      "class": "ssrf",
+      "cwe_ids": [
+        "CWE-918"
+      ],
+      "tags": [
+        "ssrf",
+        "injection",
+        "cloud",
+        "blind"
+      ]
+    },
+    {
+      "name": "attack-ssti",
+      "path": "attack/ssti/SKILL.md",
+      "category": "attack",
+      "class": "ssti",
+      "cwe_ids": [
+        "CWE-1336",
+        "CWE-94"
+      ],
+      "tags": [
+        "ssti",
+        "injection",
+        "template",
+        "rce",
+        "code-eval"
+      ]
+    },
+    {
+      "name": "attack-stego",
+      "path": "attack/stego/SKILL.md",
+      "category": "attack",
+      "class": "stego",
+      "cwe_ids": [
+        "CWE-312",
+        "CWE-311"
+      ],
+      "tags": [
+        "ctf",
+        "stego",
+        "image",
+        "audio",
+        "steghide",
+        "stegseek"
+      ]
+    },
+    {
+      "name": "attack-takeover",
+      "path": "attack/takeover/SKILL.md",
+      "category": "attack",
+      "class": "takeover",
+      "cwe_ids": [
+        "CWE-284",
+        "CWE-350"
+      ],
+      "tags": [
+        "takeover",
+        "subdomain",
+        "dangling-cname",
+        "dns",
+        "session-theft"
+      ]
+    },
+    {
+      "name": "attack-upload",
+      "path": "attack/upload/SKILL.md",
+      "category": "attack",
+      "class": "upload",
+      "cwe_ids": [
+        "CWE-434"
+      ],
+      "tags": [
+        "file-upload",
+        "webshell",
+        "rce",
+        "stored-xss",
+        "bypass"
+      ]
+    },
+    {
+      "name": "attack-waf-body-bypass",
+      "path": "attack/waf-body-bypass/SKILL.md",
+      "category": "attack",
+      "class": "waf-body-bypass",
+      "cwe_ids": [
+        "CWE-693"
+      ],
+      "tags": [
+        "waf",
+        "bypass",
+        "edge",
+        "encoding",
+        "evasion"
+      ]
+    },
+    {
+      "name": "attack-xss",
+      "path": "attack/xss/SKILL.md",
+      "category": "attack",
+      "class": "xss",
+      "cwe_ids": [
+        "CWE-79"
+      ],
+      "tags": [
+        "xss",
+        "injection",
+        "client-side",
+        "dom",
+        "blind"
+      ]
+    },
+    {
+      "name": "attack-xxe",
+      "path": "attack/xxe/SKILL.md",
+      "category": "attack",
+      "class": "xxe",
+      "cwe_ids": [
+        "CWE-611"
+      ],
+      "tags": [
+        "xxe",
+        "injection",
+        "xml",
+        "ssrf",
+        "oob",
+        "file-read"
+      ]
+    },
+    {
+      "name": "outcome",
+      "path": "outcome/SKILL.md",
+      "category": "outcome",
+      "tags": [
+        "outcome",
+        "submission",
+        "learning",
+        "acceptance-prior",
+        "dedup",
+        "bounty",
+        "operator-attested",
+        "signal"
+      ]
+    },
+    {
+      "name": "cors-poc-html",
+      "path": "proof/cors-poc-html/SKILL.md",
+      "category": "proof",
+      "tags": [
+        "cors",
+        "poc",
+        "misconfig",
+        "credentials",
+        "artifact"
+      ]
+    },
+    {
+      "name": "dynamic-validate",
+      "path": "proof/dynamic-validate/SKILL.md",
+      "category": "proof",
+      "tags": [
+        "dynamic",
+        "browser",
+        "playwright",
+        "dom-xss",
+        "oracle",
+        "execution"
+      ]
+    },
+    {
+      "name": "ev-score",
+      "path": "proof/ev-score/SKILL.md",
+      "category": "proof",
+      "tags": [
+        "severity",
+        "cvss",
+        "tier",
+        "expected-value",
+        "ev",
+        "bounty",
+        "prioritization",
+        "deterministic",
+        "evidence-bound"
+      ]
+    },
+    {
+      "name": "oob-interactsh",
+      "path": "proof/oob-interactsh/SKILL.md",
+      "category": "proof",
+      "tags": [
+        "oob",
+        "oast",
+        "interactsh",
+        "ssrf",
+        "blind-rce",
+        "blind-xxe",
+        "blind-sqli"
+      ]
+    },
+    {
+      "name": "oracles",
+      "path": "proof/oracles/SKILL.md",
+      "category": "proof",
+      "tags": [
+        "oracle",
+        "validation",
+        "poc",
+        "deterministic",
+        "no-false-positives"
+      ]
+    },
+    {
+      "name": "payout-gate",
+      "path": "proof/payout-gate/SKILL.md",
+      "category": "proof",
+      "tags": [
+        "payout",
+        "bounty",
+        "gate",
+        "dedup",
+        "severity",
+        "eligibility",
+        "submission",
+        "deterministic"
+      ]
+    },
+    {
+      "name": "poc-standard",
+      "path": "proof/poc-standard/SKILL.md",
+      "category": "proof",
+      "tags": [
+        "poc",
+        "evidence",
+        "impact",
+        "verification"
+      ]
+    },
+    {
+      "name": "waf-mutation",
+      "path": "proof/waf-mutation/SKILL.md",
+      "category": "proof",
+      "tags": [
+        "waf",
+        "bypass",
+        "mutation",
+        "evolutionary",
+        "wafrift",
+        "detonation"
+      ]
+    },
+    {
+      "name": "access-control",
+      "path": "recon/access-control/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "access-control",
+        "authz",
+        "idor",
+        "tenancy"
+      ]
+    },
+    {
+      "name": "anomaly-hunt",
+      "path": "recon/anomaly-hunt/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "differential",
+        "error-leak",
+        "timing",
+        "behaviour"
+      ]
+    },
+    {
+      "name": "api-discovery",
+      "path": "recon/api-discovery/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "api",
+        "endpoints",
+        "idor",
+        "bola",
+        "attack-surface"
+      ]
+    },
+    {
+      "name": "archive-urls",
+      "path": "recon/archive-urls/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "wayback",
+        "historical",
+        "endpoints",
+        "params"
+      ]
+    },
+    {
+      "name": "auth-flow",
+      "path": "recon/auth-flow/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "auth",
+        "jwt",
+        "oauth",
+        "session"
+      ]
+    },
+    {
+      "name": "cloud-assets",
+      "path": "recon/cloud-assets/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "cloud",
+        "s3",
+        "buckets",
+        "storage",
+        "exposure"
+      ]
+    },
+    {
+      "name": "content-discovery",
+      "path": "recon/content-discovery/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "fuzzing",
+        "content-discovery",
+        "directories",
+        "backups",
+        "admin"
+      ]
+    },
+    {
+      "name": "ctf-crypto-triage",
+      "path": "recon/ctf-crypto-triage/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "ctf",
+        "crypto",
+        "rsa",
+        "cipher",
+        "triage"
+      ]
+    },
+    {
+      "name": "ctf-forensics-triage",
+      "path": "recon/ctf-forensics-triage/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "ctf",
+        "forensics",
+        "pcap",
+        "memory",
+        "carve",
+        "triage",
+        "foothold"
+      ]
+    },
+    {
+      "name": "ctf-pwn-triage",
+      "path": "recon/ctf-pwn-triage/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "ctf",
+        "pwn",
+        "binary",
+        "checksec",
+        "triage",
+        "foothold"
+      ]
+    },
+    {
+      "name": "ctf-rev-triage",
+      "path": "recon/ctf-rev-triage/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "ctf",
+        "rev",
+        "reverse-engineering",
+        "decompile",
+        "triage"
+      ]
+    },
+    {
+      "name": "ctf-stego-triage",
+      "path": "recon/ctf-stego-triage/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "ctf",
+        "stego",
+        "image",
+        "audio",
+        "exiftool",
+        "triage"
+      ]
+    },
+    {
+      "name": "cve-intel",
+      "path": "recon/cve-intel/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "cve",
+        "kev",
+        "epss",
+        "variant-analysis",
+        "stack"
+      ]
+    },
+    {
+      "name": "deep-source-trace",
+      "path": "recon/deep-source-trace/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "javascript",
+        "sast",
+        "taint",
+        "source-sink",
+        "dom-xss",
+        "prototype-pollution",
+        "ssrf"
+      ]
+    },
+    {
+      "name": "dns-intel",
+      "path": "recon/dns-intel/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "dns",
+        "email-security",
+        "asn",
+        "cdn"
+      ]
+    },
+    {
+      "name": "endpoint-deep",
+      "path": "recon/endpoint-deep/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "api",
+        "endpoints",
+        "attack-surface"
+      ]
+    },
+    {
+      "name": "exposed-datastores",
+      "path": "recon/exposed-datastores/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "exposure",
+        "backups",
+        "datastore",
+        "git",
+        "secrets",
+        "buckets",
+        "disclosure"
+      ]
+    },
+    {
+      "name": "graphql",
+      "path": "recon/graphql/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "graphql",
+        "api",
+        "introspection",
+        "schema",
+        "bola"
+      ]
+    },
+    {
+      "name": "http-probe",
+      "path": "recon/http-probe/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "http",
+        "liveness",
+        "tech-detect",
+        "tls",
+        "waf"
+      ]
+    },
+    {
+      "name": "interactive-surface",
+      "path": "recon/interactive-surface/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "interactive",
+        "stateful-protocol",
+        "websocket",
+        "pwn",
+        "non-http",
+        "foothold"
+      ]
+    },
+    {
+      "name": "js-secret-mining",
+      "path": "recon/js-secret-mining/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "javascript",
+        "secrets",
+        "endpoints"
+      ]
+    },
+    {
+      "name": "js-sink-mining",
+      "path": "recon/js-sink-mining/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "javascript",
+        "sast",
+        "dom-xss",
+        "prototype-pollution",
+        "postmessage"
+      ]
+    },
+    {
+      "name": "nonhttp-cred-surface",
+      "path": "recon/nonhttp-cred-surface/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "ssh",
+        "ftp",
+        "smb",
+        "credentials",
+        "non-http",
+        "foothold"
+      ]
+    },
+    {
+      "name": "novelty-scout",
+      "path": "recon/novelty-scout/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "novelty",
+        "dedup",
+        "prior-art",
+        "osint",
+        "hacktivity",
+        "cve",
+        "ghsa",
+        "bounty",
+        "passive"
+      ]
+    },
+    {
+      "name": "oauth-pkce",
+      "path": "recon/oauth-pkce/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "oauth",
+        "oidc",
+        "pkce",
+        "redirect-uri",
+        "token",
+        "sso"
+      ]
+    },
+    {
+      "name": "otp-logic",
+      "path": "recon/otp-logic/SKILL.md",
+      "category": "recon",
+      "cwe_ids": [
+        "CWE-287",
+        "CWE-640",
+        "CWE-308",
+        "CWE-310"
+      ],
+      "tags": [
+        "osint",
+        "auth",
+        "otp",
+        "2fa",
+        "mfa",
+        "foothold",
+        "logic-flaw"
+      ]
+    },
+    {
+      "name": "param-mining",
+      "path": "recon/param-mining/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "parameters",
+        "fuzzing",
+        "attack-surface"
+      ]
+    },
+    {
+      "name": "port-service",
+      "path": "recon/port-service/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "ports",
+        "services",
+        "network",
+        "attack-surface"
+      ]
+    },
+    {
+      "name": "post-foothold-recon",
+      "path": "recon/post-foothold-recon/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "post-foothold",
+        "planner",
+        "shell",
+        "privesc",
+        "loot",
+        "lateral",
+        "dependency-graph"
+      ]
+    },
+    {
+      "name": "rate-limit-audit",
+      "path": "recon/rate-limit-audit/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "rate-limit",
+        "control-test",
+        "lockout",
+        "auth",
+        "brute-as-control"
+      ]
+    },
+    {
+      "name": "session-fixation",
+      "path": "recon/session-fixation/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "session",
+        "csrf",
+        "cookies",
+        "fixation",
+        "samesite",
+        "logout"
+      ]
+    },
+    {
+      "name": "smtp-protocol",
+      "path": "recon/smtp-protocol/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "smtp",
+        "imap",
+        "email",
+        "spf",
+        "starttls",
+        "enumeration"
+      ]
+    },
+    {
+      "name": "subdomain-enum",
+      "path": "recon/subdomain-enum/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "subdomains",
+        "dns",
+        "attack-surface"
+      ]
+    },
+    {
+      "name": "takeover",
+      "path": "recon/takeover/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "takeover",
+        "subdomain",
+        "dangling-cname",
+        "dns",
+        "quick-win"
+      ]
+    },
+    {
+      "name": "target-classify",
+      "path": "recon/target-classify/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "classify",
+        "router",
+        "mode",
+        "planning",
+        "scope"
+      ]
+    },
+    {
+      "name": "tech-specific",
+      "path": "recon/tech-specific/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "osint",
+        "fingerprint",
+        "cve",
+        "misconfig",
+        "tech"
+      ]
+    },
+    {
+      "name": "visual-recon",
+      "path": "recon/visual-recon/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "screenshots",
+        "triage",
+        "visual",
+        "surface"
+      ]
+    },
+    {
+      "name": "waf-body-encoding",
+      "path": "recon/waf-body-encoding/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "waf",
+        "bypass",
+        "encoding",
+        "transfer-encoding",
+        "content-type",
+        "edge"
+      ]
+    },
+    {
+      "name": "web-crawl",
+      "path": "recon/web-crawl/SKILL.md",
+      "category": "recon",
+      "tags": [
+        "crawl",
+        "endpoints",
+        "params",
+        "api",
+        "forms"
+      ]
+    },
+    {
+      "name": "payout-report",
+      "path": "report/payout-report/SKILL.md",
+      "category": "report",
+      "tags": [
+        "report",
+        "bounty",
+        "payout",
+        "cvss",
+        "triage",
+        "dedup",
+        "submission",
+        "poc"
+      ]
+    }
+  ]
+}

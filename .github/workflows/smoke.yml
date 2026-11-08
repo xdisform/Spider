@@ -1,0 +1,38 @@
+name: smoke
+
+# Offline guards — no arsenal (bin/ is provisioned, gitignored) and no target traffic. These run the same
+# checks a maintainer runs locally before a PR: the resolver stays in sync, every workflow executes
+# end-to-end with mocked agents (catches runtime control-flow bugs node --check cannot), the corpus tools
+# hold their contracts, and the analysis tools pass their self-tests.
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Resolver sync + skill-pack coverage
+        run: bash tools/smoke-resolver.sh
+
+      - name: Workflows execute end-to-end (mocked agents)
+        run: node tools/smoke-workflows.mjs
+
+      - name: Corpus / retrieve contracts
+        run: bash tools/smoke-corpus.sh
+
+      - name: Analysis tool self-tests
+        run: |
+          python -I tools/source-trace.py --self-test
+          python tools/recall.py --self-test

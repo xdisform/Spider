@@ -1,0 +1,26 @@
+# Normalize line endings. Spider's tooling is POSIX shell + Python + Node and the CI
+# runs on Linux, so every text file is stored and checked out with LF — a CRLF shell
+# script fails to run on Linux. Keep this even on Windows clones.
+* text=auto eol=lf
+
+# Scripts MUST be LF (a CR in the shebang line breaks them on Linux).
+*.sh    text eol=lf
+*.py    text eol=lf
+*.mjs   text eol=lf
+*.ps1   text eol=crlf
+
+# Data/docs — LF.
+*.json  text eol=lf
+*.jsonl text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.md    text eol=lf
+
+# Common binaries (none shipped today — bin/ is gitignored — but future-proof the repo).
+*.png   binary
+*.jpg   binary
+*.gif   binary
+*.ico   binary
+*.gz    binary
+*.zip   binary
+*.pdf   binary

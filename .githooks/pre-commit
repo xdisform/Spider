@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Spider publish-safety guard. Blocks staging of paths that carry the arsenal
+# binaries, real-engagement data, or operator-local files — even via `git add -f`,
+# which would otherwise defeat .gitignore and leak a real target's attack surface
+# (or bloat the repo with GPL/AGPL tool sources) into a public history.
+#
+# Install once per clone:  git config core.hooksPath .githooks
+set -euo pipefail
+
+staged="$(git diff --cached --name-only --diff-filter=AM || true)"
+[ -z "$staged" ] && exit 0
+
+blocked=""
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  case "$f" in
+    bin/*)                                   blocked="$blocked\n  $f  (arsenal binary / vendored tool source — provisioned, never committed)";;
+    targets/README.md)                       : ;; # tracked file under targets/
+    targets/session.env.example)             : ;; # sanitized session template — ships
+    targets/*)                               blocked="$blocked\n  $f  (real engagement data — scope/evidence/findings)";;
+    interactsh-client/*)                     blocked="$blocked\n  $f  (operator-local runtime dir)";;
+    raw/*)                                   blocked="$blocked\n  $f  (stray recon dump — regenerated per run)";;
+    leash.jsonl|wfpstate.xml|harvester.json|harvester.jsonl|harvester.xml|*.state|*.by.txt) blocked="$blocked\n  $f  (per-engagement runtime dump — OSINT/scan-state/traffic log)";;
+    .claude/skills/context/_template/*)      : ;; # the sanitized template is publishable
+    .claude/skills/context/*/*)              blocked="$blocked\n  $f  (per-target context pack — may embed a real target fingerprint)";;
+  esac
+done <<< "$staged"
+
+# Cheap secret sweep over the staged diff (not the whole tree).
+secrets="$(git diff --cached -U0 --diff-filter=AM \
+  | grep -nE '(ghp_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|xox[baprs]-[A-Za-z0-9-]{10,}|-----BEGIN [A-Z ]*PRIVATE KEY-----|eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.)' \
+  || true)"
+
+if [ -n "$blocked" ] || [ -n "$secrets" ]; then
+  echo "pre-commit: refusing to commit — publish-safety guard tripped." >&2
+  [ -n "$blocked" ] && { echo "" >&2; echo "Disallowed paths staged:" >&2; printf "$blocked\n" >&2; }
+  [ -n "$secrets" ] && { echo "" >&2; echo "Possible secret in staged diff:" >&2; echo "$secrets" >&2; }
+  echo "" >&2
+  echo "If a block is a false positive, review carefully; these paths are excluded on purpose." >&2
+  exit 1
+fi
+exit 0

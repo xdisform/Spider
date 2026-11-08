@@ -1,0 +1,124 @@
+# Example scope.yaml — copy to targets/<target>/scope.yaml and fill for your program.
+# This file is the ONLY authority for what Spider may touch. No scope, no run.
+target: example
+program: "Example BB"                                     # program name (public or private / invite-only)
+platform: "BI.ZONE"                                       # BI.ZONE | Standoff 365 | HackerOne | YesWeHack | Bugcrowd | private
+program_url: "https://example.com/security"              # PUBLIC program page if public; leave "" for private/closed — fine
+policy_url: "https://example.com/security/policy"        # program rules/ROE page if available (optional)
+researcher: "your-handle"                                # the participant; attests authorization + goes in the ID header
+required_header: "X-Bug-Bounty: your-handle"             # stamped on every HTTP request by the leash
+# NOTE: `hosts` below are the program's in-scope list. Anything the program marks "out of scope" /
+# "Вне области тестирования" goes in out_of_scope, never hosts — that is what keeps you authorized.
+# Private/closed programs: no public URL needed; this scope file is the authority.
+rate_limit_rps: 5                                        # aggregate cap across the whole fleet
+scope_exact: false                                       # false = allow subdomains of the hosts below
+engagement:                                              # OPTIONAL (P2/P3). Omit the whole block => type:auto => classifier auto-detects => today's web behavior
+  type: auto                                             # auto | web | network | service | api | binary | file | ctf | mixed
+  modes: []                                              # OPTIONAL explicit mode set; [] => router auto-detects. Vocab: web|network|service|api|binary|file|ctf-pwn|ctf-rev|ctf-crypto|ctf-forensics|ctf-stego
+  artifacts: []                                          # OPTIONAL local files placed under targets/<t>/artifacts/ (binary/pcap/doc/image) — analyzed LOCALLY, never fetched
+  challenges: []                                         # OPTIONAL CTF input contract: [{name, category: pwn|rev|crypto|forensics|stego, artifact, remote, libc}]
+hosts:
+  - host: app.example.com
+    ip: 203.0.113.10
+    priority: critical
+  - host: api.example.com
+    ip: 203.0.113.11
+    priority: high
+  - host: www.example.com
+    priority: medium
+netblocks: []                                            # optional in-scope CIDRs, e.g. ["203.0.113.0/24"]
+out_of_scope:
+  - status.example.com
+  - blog.example.com
+policies:
+  rce_proof: "whoami|id|hostname only"                   # program's safe-PoC limits
+  sqli_proof: "database()|@@version only"
+  # Granular control-test policy. A control-test (proving a control is ABSENT) is not a
+  # brute-force of others. Enable ONLY what the specific program's rules allow; the operator
+  # attests it. Everything still runs through the leash (in-scope, paced, audited).
+  rate_limit_test:
+    enabled: true
+    max_requests_per_endpoint: 50    # 50 with no 429/419 => the control is absent (a defect)
+    own_accounts_only: true          # never target another person's account
+  password_spray_light:
+    enabled: false                   # OFF by default; enable only if the program allows it
+    max_tries_per_account: 5
+    own_accounts_only: true          # demonstrate lockout absence on YOUR test accounts only
+  default_cred_control_test:         # F5: non-HTTP/service DEFAULT-or-weak-cred control-test (spray, not brute)
+    enabled: false                   # OFF by default; enable ONLY if the program allows service cred testing
+    services: [ssh, ftp, smb, rdp, mysql, mssql, redis, vnc, telnet]
+    max_pairs: 20                    # SMALL curated default/weak set — never a wordlist dump
+    pairing_mode: spray              # line-by-line (nuclei pitchfork / nxc --no-bruteforce); brute FORBIDDEN
+    stop_at_first: true
+    rps: 1                           # <= rate_limit_rps above
+    inter_attempt_delay_s: 3         # explicit min delay between attempts (enforced by tools/leash-cred.sh)
+    jitter_s: 2
+    max_tries_per_principal: 1       # one failed attempt per account => lockouts never trigger
+    lockout_backoff_s: 300           # on any lockout/throttle signal: stop + back off
+    anon_login_check: true           # FTP/SMB anonymous + SSH "is password auth even on?" pre-check
+  smtp_semantics_probe:
+    enabled: false                   # needs tools/leash-tcp (non-HTTP scope audit) before enabling
+    max_recipients: 20               # RCPT TO enumeration cap
+    max_from_variants: 5             # SPF/sender-spoof test cap
+  interactive_protocol:              # P5: hold a socket/REPL and exploit a logic bug over a conversation
+    enabled: false                   # OFF by default; ON => interactive-exploit allowed + the recon lens is added. OFF => class refuses, lens NOT added
+    protos: [tcp, tls, ws, wss, pty] # allowed transports (pty = a spawned client/console via pexpect)
+    ports: []                        # OPTIONAL extra port allow-list ([] = any in-scope port a service was found on)
+    max_frames: 500                  # total send+recv frames per held session (anti-flood)
+    max_bytes: 1048576               # total payload bytes per session (anti-flood)
+    max_session_s: 120               # wall-clock cap per held session
+    idle_timeout_s: 10               # per-recv timeout (no infinite hang)
+    allow_interactive_passthrough: false  # permit Remote.interactive() manual driving (still fully logged)
+  forbidden:
+    - flood                          # anything beyond the caps above
+    - account-takeover-of-others     # never act on another person's account/data
+    - destructive
+    - social-engineering
+    - physical
+objective:                           # OPTIONAL (P1). Omit the whole block => mode:impact == today's bug-bounty behavior (iterate to dry)
+  mode: impact                       # impact (DEFAULT) | flag (captured flag is TERMINAL) | bounty (fix3; hunt PAYABLE findings, dry = eligible-novel surface exhausted)
+  goal: "read /flag on app.example.com and return its contents"  # human goal; injected into EVERY mission in flag mode (bounty: "find and prove payable vulnerabilities on the in-scope assets of <program>")
+  flag_format: 'flag\{[^}]{1,128}\}' # regex the FLAG ORACLE matches captured strings against. Lives ONLY here. flag-mode-only (ignored in bounty). Defaults to flag\{[^}]+\} if omitted
+  where_hint: ""                     # OPTIONAL steer — a lead to prove, never authority or proof
+  # --- post-exploitation oracle markers (OPTIONAL) — the PROGRAM'S milestone proof markers used by the AD
+  #     (ad-recon/adcs) and backup-pivot packs. The defaults shown are the Standoff 365 "unacceptable event"
+  #     (НС) convention; set your own for a different program. Omit => the packs fall back to these defaults
+  #     as the worked example — nothing here widens scope or relaxes a safeguard.
+  # oracle_markers:
+  #   da_user: standoff365               # marker account the AD oracle creates in the Domain Admins group
+  #   da_group: "Администраторы домена"  # the DA group (localized; "Domain Admins" on EN domains)
+  #   backup_marker_file: standoff365_hack_me  # the ONE file the backup-pivot oracle encrypts in place
+  # --- bounty-mode-only keys (fix3; all OPTIONAL — uncomment with mode:bounty; absent => today's behavior) ---
+  # min_payable_tier: P4             # B2 (owner): the program's PAY FLOOR — lowest reward tier that still pays, transcribed from the brief. A finding whose evidence-derived `tier` is below this is Informative-equivalent (expected_value 0, payout_ready false). Distinct from program.min_pursue_priority (the EFFORT floor)
+  # novelty:                         # B3 (owner): prior-art / dedup controls. Absent => novelty-scout lens never pushed; synthesizer writes no novelty fields (byte-identical to today)
+  #   check: auto                    #   auto | off
+  #   disclosure_urls: []            #   OPTIONAL non-H1 disclosure index URL(s) the operator supplies (public program data)
+  #   changelog_urls: []             #   OPTIONAL changelog/release-notes URL(s) — "already fixed?" + narrow-fix variant seeds
+  #   submitted_archive: true        #   read targets/<t>/submitted/ as a dedup source (default true)
+  #   drop_duplicates: false         #   when true + mode:bounty, a HIGH-confidence likely-duplicate LEAF (exact novelty_ref, no novel dependent) is held as a lead instead of run (default false)
+  #   waive_unverified: false        #   when true, a could-not-verify finding may clear the dedup rung on operator waiver (default false; NEVER auto-promoted)
+
+# program (MAP form) — OPTIONAL (fix3 bounty mode). The program's PUBLISHED economics, transcribed by the
+# operator. This is the SAME top-level `program` key shown at the top as a scalar NAME — here in its MAP
+# form (supply ONE: the scalar name OR this map). Public program data — NOT a secret; safe to embed in a
+# mission like flag_format, unlike session.env. Absent (or the scalar form) => mode:bounty degrades to a
+# severity-floor + dedup heuristic (EV "unknown"). All keys OPTIONAL. Uncomment to opt in:
+# program:
+#   name: "Example BB"               # the program name (carries the scalar form's value into the map)
+#   severity_scheme: cvss            # B1: cvss (H1/Intigriti/YWH) | vrt (Bugcrowd P1..P5) | custom
+#   currency: USD                    # B1: ISO-ish currency label for EV reporting
+#   reward_table:                    # B5 (owner): tier -> reward range, transcribed from the brief. Keys are VRT priorities P1..P5. P5 ABSENT => not payable. An omitted tier => unknown range (EV "unknown", not 0)
+#     tiers: { P1: [5000, 20000], P2: [2000, 5000], P3: [500, 2000], P4: [100, 500] }
+#   asset_tiers: []                  # B1 (YWH model): [{ match: "<host or glob>", multiplier: 1.0 }] asset-value weighting; default 1.0 for unlisted hosts
+#   eligible_classes: []             # B1/B4: vuln classes the brief pays for. [] => any in-scope class is eligible
+#   excluded_classes: []             # B1/B4: known-ineligible classes (self-xss, missing-spf/dmarc, clickjacking-non-sensitive, rate-limit-non-auth, verbose-version-banner, ...). NEVER submitted, never burn fleet — but kept as a noted LEAD, never silently dropped
+#   exclusions:                      # B4 (owner): the program's OWN "won't pay" list, keyword-matched (lower-cased substring, first-match-wins)
+#     - { match: "self-xss", reason: "program excludes self-XSS", action: note, vrt: "" }
+#     # action enum: note (down-rank to a noted lead) | control-test-only (pursue only as a bounded control-test per policies.*) | downrank (pursue, but last)
+#   vrt_version: ""                  # B4: the VRT snapshot the operator transcribed against (audit)
+#   platform_taxonomy: vrt           # B4: vrt | cwe-cvss — which vocabulary /report emits (Bugcrowd P-ratings vs H1 CWE+CVSS)
+#   vrt_overrides: []                # B4: OPTIONAL per-program priority/mapping overrides — [{ match, vrt, priority }]
+#   min_pursue_priority: P4          # B4 (owner): pursue classes at/above this VRT priority; below => note-only. The EFFORT floor (distinct from objective.min_payable_tier, the SUBMISSION floor). Absent => pursue all, note P5
+#   dedup_posture: public            # B1/B3: public (disclosed reports searchable) | archive (operator submission archive only) | private (CANNOT dedup-check => honest could-not-verify, never auto-novel)
+#   report_template: ""              # B7: OPTIONAL path/URL to the program's own report template /report adheres to. Non-secret. Absent => platform_taxonomy default template
+#   submission_platform: ""          # B6: OPTIONAL — lets /outcome --pull read the operator's OWN report states/payouts (operator's own token, never stored)

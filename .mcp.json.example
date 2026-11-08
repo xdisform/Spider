@@ -1,0 +1,42 @@
+{
+  "_comment": "Spider MCP servers. Copy to .mcp.json (gitignored) and fill REPLACE_* values. Only enable what you have keys/instances for. See docs/mcp-integration.md for the leash-as-proxy rules and per-phase mapping. Prereqs: uv (uvx) for osint/bloodhound, Node (npx) for playwright/shodan.",
+
+  "mcpServers": {
+    "osint": {
+      "command": "uvx",
+      "args": ["osint-mcp-server"]
+    },
+
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest",
+        "--proxy-server", "http://127.0.0.1:8080",
+        "--ignore-https-errors",
+        "--headless"
+      ]
+    },
+
+    "shodan": {
+      "command": "node",
+      "args": ["REPLACE_WITH_ABS_PATH/Shodan-MCP-Server/build/index.js"],
+      "env": {
+        "SHODAN_API_KEY": "REPLACE_WITH_YOUR_SHODAN_API_KEY"
+      }
+    },
+
+    "bloodhound_mcp": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/mwnickerson/bloodhound_mcp",
+        "bloodhound-mcp"
+      ],
+      "env": {
+        "BLOODHOUND_DOMAIN": "127.0.0.1",
+        "BLOODHOUND_TOKEN_ID": "REPLACE_WITH_BH_TOKEN_ID",
+        "BLOODHOUND_TOKEN_KEY": "REPLACE_WITH_BH_TOKEN_KEY"
+      }
+    }
+  }
+}
